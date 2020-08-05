@@ -11,6 +11,7 @@ class NewVisitorTest(unittest.TestCase):
         #Check out the homepage
         self.browser.get('http://localhost:8000')
         self.assertIn('To-Do', self.browser.title, 'Wrong title')
+        self.fail('Finish the test!')
         #browser = webdriver.Firefox()
 
         #browser.get('http://localhost:8000')
@@ -34,7 +35,7 @@ class NewVisitorTest(unittest.TestCase):
 
         #all works
 
-        self.browser.quit()
+        #self.browser.quit()
 
 
 if __name__ == '__main__':
