@@ -6,4 +6,4 @@ from django.http import HttpResponse
 #home_page = None
 def home_page(request):
     #pass   #just passes the test
-    return HttpResponse('<html><title>To-Do Lists</title></html>')
+    return render(request, 'home.html')
