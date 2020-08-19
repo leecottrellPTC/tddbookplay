@@ -1,10 +1,9 @@
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
-import unittest
 
-import unittest
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
 
@@ -19,7 +18,8 @@ class NewVisitorTest(unittest.TestCase):
 
     def test_createAndRetrieveList(self):
         #Check out the homepage
-        self.browser.get('http://localhost:8000')
+        #self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
         
         #self.fail('Finish the test!')
         #browser = webdriver.Firefox()
@@ -42,6 +42,13 @@ class NewVisitorTest(unittest.TestCase):
 
         #ENter Buy Peacock feathers
         inputbox.send_keys('Buy peacock feathers')
+        #time.sleep(10)
+        #Pressing enter, the page updates and "!: Buy Peacock Feathers is an item"
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(1)#longer numbers to avoid the stale errors
+
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Use peacock feathers to make a fly')
         #time.sleep(10)
         #Pressing enter, the page updates and "!: Buy Peacock Feathers is an item"
         inputbox.send_keys(Keys.ENTER)
@@ -68,6 +75,5 @@ class NewVisitorTest(unittest.TestCase):
         #self.browser.quit()
         self.fail('Finish the test!')
 
-if __name__ == '__main__':
-    unittest.main(warnings='ignore')
-
+#def test_can_start_a_list_and_retrieve_it_later(self):
+    #self.browser.get(self.live_server_url)
