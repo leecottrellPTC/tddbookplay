@@ -28,6 +28,16 @@ from lists.models import Item
 #    def test_bad_math(self):
 #        self.assertEqual(1 + 1, 3)
 
+class ListViewTest(TestCase):
+    def test_displays_all_items(self):
+        Item.objects.create(text='itemny 1') #just placeholder stuff
+        Item.objects.create(text='itemny 2')
+
+        response = self.client.get('/lists/the-only-list-in-the-world/')
+
+        self.assertContains(response, 'itemny 1')
+        self.assertContains(response ,'itemny 2')
+
 class HomePageTest(TestCase):
     def test_root_url_resolves_to_home_page(self):
         found = resolve('/')
@@ -61,13 +71,18 @@ class HomePageTest(TestCase):
         response = self.client.post('/', data={'item_text': 'A new list item'})
 
         self.assertEqual(response.status_code, 302)#302 is redirect
-        self.assertEqual(response['location'], '/') #redirect after the POST
+        self.assertEqual(response['location'], '/lists/the-only-list-in-the-world/') #redirect after the POST
 
-    def test_displays_all_list_items(self):
-        Item.objects.create(text='itemey 1')
-        Item.objects.create(text='itemey 2')
+    # def test_displays_all_list_items(self):
+    #     Item.objects.create(text='itemey 1')
+    #     Item.objects.create(text='itemey 2')
 
-        response = self.client.get('/')
+    #     response = self.client.get('/')
 
-        self.assertIn('itemey 1', response.content.decode())
-        self.assertIn('itemey 2', response.content.decode())
+    #     self.assertIn('itemey 1', response.content.decode())
+    #     self.assertIn('itemey 2', response.content.decode())
+
+    class ListViewTest(TestCase):
+        def test_uses_list_template(self):
+            response = self.client.get('/lists/the-only-list-in-the-world/')
+            self.assertTempalteUsed(response, 'list.html')
